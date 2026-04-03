@@ -83,7 +83,7 @@ async function getAgentEvents() {
     }
 
     events.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-    return events.slice(0, 15);
+    return events.slice(0, 5);
   } catch {
     return [];
   }
@@ -96,7 +96,10 @@ export default async function AgentLog() {
     <div className="rounded-xl p-5" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
       <div className="flex items-center justify-between mb-4">
         <h2 className="font-semibold text-base">Agent Communication Log</h2>
-        <span className="text-xs" style={{ color: "var(--muted)" }}>protocol events · live</span>
+        <div className="flex items-center gap-2">
+          <span className="text-xs" style={{ color: "var(--muted)" }}>protocol events · live</span>
+          <a href="/log" className="text-xs hover:text-white transition-colors" style={{ color: "var(--muted)" }}>View all →</a>
+        </div>
       </div>
 
       {events.length === 0 ? (

@@ -19,7 +19,7 @@ async function signumGet(params: Record<string, string>) {
 
 export async function GET() {
   const txPromises = [SIGNAAI_ADDRESS, WORKER_ADDRESS].map((account) =>
-    signumGet({ requestType: "getAccountTransactions", account, firstIndex: "0", lastIndex: "19" })
+    signumGet({ requestType: "getAccountTransactions", account, firstIndex: "0", lastIndex: "99" })
   );
   const results = await Promise.all(txPromises);
 
@@ -47,7 +47,7 @@ export async function GET() {
         sender: tx.senderRS,
         recipient: tx.recipientRS,
         amount: amountNQT / 100_000_000,
-        message: msg.slice(0, 60) || null,
+        message: msg.slice(0, 80) || null,
         timestamp: signumTs(tx.timestamp),
         block: tx.block,
         confirmations: tx.confirmations ?? 0,
@@ -55,8 +55,7 @@ export async function GET() {
     }
   }
 
-  // Sort newest first
   transactions.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
-  return NextResponse.json({ transactions: transactions.slice(0, 20) });
+  return NextResponse.json({ transactions });
 }

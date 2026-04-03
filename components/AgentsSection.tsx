@@ -65,21 +65,25 @@ async function getAgents() {
 
 export default async function AgentsSection() {
   const agents = await getAgents();
+  const preview = agents.slice(0, 5);
 
   return (
     <div className="rounded-xl p-5" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
       <div className="flex items-center justify-between mb-4">
         <h2 className="font-semibold text-base">Registered Agents</h2>
-        <span className="text-xs px-2 py-0.5 rounded-full font-mono" style={{ color: "var(--accent)", background: "rgba(129,140,248,0.1)" }}>
-          {agents.length} live
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-xs px-2 py-0.5 rounded-full font-mono" style={{ color: "var(--accent)", background: "rgba(129,140,248,0.1)" }}>
+            {agents.length} live
+          </span>
+          <a href="/agents" className="text-xs hover:text-white transition-colors" style={{ color: "var(--muted)" }}>View all →</a>
+        </div>
       </div>
 
-      {agents.length === 0 ? (
+      {preview.length === 0 ? (
         <p className="text-sm py-8 text-center" style={{ color: "var(--muted)" }}>No agents found</p>
       ) : (
         <div className="space-y-3">
-          {agents.map((agent) => (
+          {preview.map((agent) => (
             <div key={agent.alias} className="rounded-lg p-4" style={{ background: "var(--background)", border: "1px solid var(--border)" }}>
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div>

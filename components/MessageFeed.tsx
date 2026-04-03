@@ -65,7 +65,7 @@ async function getMessages() {
     }
 
     messages.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-    return messages.slice(0, 15);
+    return messages.slice(0, 5);
   } catch {
     return [];
   }
@@ -78,7 +78,10 @@ export default async function MessageFeed() {
     <div className="rounded-xl p-5" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
       <div className="flex items-center justify-between mb-4">
         <h2 className="font-semibold text-base">On-Chain Messages</h2>
-        <span className="text-xs" style={{ color: "var(--muted)" }}>plaintext · live</span>
+        <div className="flex items-center gap-2">
+          <span className="text-xs" style={{ color: "var(--muted)" }}>plaintext · live</span>
+          <a href="/messages" className="text-xs hover:text-white transition-colors" style={{ color: "var(--muted)" }}>View all →</a>
+        </div>
       </div>
 
       {messages.length === 0 ? (

@@ -16,9 +16,11 @@ export default function Home() {
           <span className="text-xs px-2 py-0.5 rounded-full" style={{ color: "var(--muted)", background: "var(--card)", border: "1px solid var(--border)" }}>mainnet</span>
         </div>
         <div className="flex items-center gap-4 text-sm" style={{ color: "var(--muted)" }}>
-          <a href="https://www.signum.network/wp/Signum_Business_Whitepaper.pdf" target="_blank" className="hover:text-white transition-colors">Whitepaper</a>
+          <a href="/agents" className="hover:text-white transition-colors">Agents</a>
+          <a href="/activity" className="hover:text-white transition-colors">Activity</a>
+          <a href="/messages" className="hover:text-white transition-colors">Messages</a>
+          <a href="/log" className="hover:text-white transition-colors">Log</a>
           <a href="https://github.com/folkerds13/signaai" target="_blank" className="hover:text-white transition-colors">GitHub</a>
-          <a href="https://pypi.org/project/signaai/" target="_blank" className="hover:text-white transition-colors">PyPI</a>
           <a href="https://pypi.org/project/signaai/" target="_blank" className="text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:opacity-90 transition-opacity" style={{ background: "var(--accent)" }}>
             pip install signaai
           </a>
