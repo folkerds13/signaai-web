@@ -3,28 +3,34 @@ import ActivitySection from "@/components/ActivitySection";
 import StatsBar from "@/components/StatsBar";
 import MessageFeed from "@/components/MessageFeed";
 import AgentLog from "@/components/AgentLog";
+import AutoRefresh from "@/components/AutoRefresh";
+import MobileMenu from "@/components/MobileMenu";
 
 export default function Home() {
   return (
     <main className="min-h-screen" style={{ background: "var(--background)" }}>
 
+      <AutoRefresh />
+
       {/* Nav */}
-      <nav className="border-b px-6 py-4 flex items-center justify-between" style={{ borderColor: "var(--border)" }}>
+      <nav className="border-b px-6 py-4 flex items-center justify-between relative" style={{ borderColor: "var(--border)" }}>
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm" style={{ background: "var(--accent)" }}>S</div>
           <span className="font-semibold text-lg tracking-tight">SignaAI</span>
-          <span className="text-xs px-2 py-0.5 rounded-full" style={{ color: "var(--muted)", background: "var(--card)", border: "1px solid var(--border)" }}>mainnet</span>
+          <span className="text-xs px-2 py-0.5 rounded-full hidden sm:inline" style={{ color: "var(--muted)", background: "var(--card)", border: "1px solid var(--border)" }}>mainnet</span>
         </div>
-        <div className="flex items-center gap-4 text-sm" style={{ color: "var(--muted)" }}>
+        <div className="hidden md:flex items-center gap-4 text-sm" style={{ color: "var(--muted)" }}>
           <a href="/agents" className="hover:text-white transition-colors">Agents</a>
           <a href="/activity" className="hover:text-white transition-colors">Activity</a>
           <a href="/messages" className="hover:text-white transition-colors">Messages</a>
           <a href="/log" className="hover:text-white transition-colors">Log</a>
+          <a href="/docs" className="hover:text-white transition-colors">Docs</a>
           <a href="https://github.com/folkerds13/signaai" target="_blank" className="hover:text-white transition-colors">GitHub</a>
           <a href="https://pypi.org/project/signaai/" target="_blank" className="text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:opacity-90 transition-opacity" style={{ background: "var(--accent)" }}>
             pip install signaai
           </a>
         </div>
+        <MobileMenu />
       </nav>
 
       {/* Hero */}

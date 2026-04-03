@@ -29,10 +29,13 @@ export default function MessagesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/messages").then((r) => r.json()).then((data) => {
+    const load = () => fetch("/api/messages").then((r) => r.json()).then((data) => {
       setAll(data.messages ?? []);
       setLoading(false);
     });
+    load();
+    const id = setInterval(load, 30000);
+    return () => clearInterval(id);
   }, []);
 
   const q = search.toLowerCase();
@@ -60,6 +63,7 @@ export default function MessagesPage() {
           <Link href="/activity" className="hover:text-white transition-colors">Activity</Link>
           <Link href="/messages" className="text-white transition-colors">Messages</Link>
           <Link href="/log" className="hover:text-white transition-colors">Agent Log</Link>
+          <Link href="/docs" className="hover:text-white transition-colors">Docs</Link>
         </div>
       </nav>
 

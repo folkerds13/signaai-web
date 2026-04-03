@@ -1,8 +1,20 @@
 const NODE = "https://europe.signum.network";
+const SIGNUM_EPOCH = new Date("2014-01-11T02:00:00Z").getTime() / 1000;
 const REGISTRY_ACCOUNTS = [
   "S-PS4K-2KE2-8LEV-HD2YE",
   "S-44S7-32XB-5DM5-5AL3K",
 ];
+
+function timeAgo(iso: string | null) {
+  if (!iso) return "never";
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  return `${Math.floor(hrs / 24)}d ago`;
+}
 
 async function signumGet(params: Record<string, string>) {
   const qs = new URLSearchParams({ requestType: params.requestType, ...params }).toString();
@@ -55,7 +67,12 @@ async function getAgents() {
         firstIndex: "0",
         lastIndex: "99",
       });
-      agents.push({ ...agent, txCount: txData.transactions?.length ?? 0 });
+      const txList = txData.transactions ?? [];
+      const lastSeenTs = txList[0]?.timestamp;
+      const lastSeen = lastSeenTs
+        ? new Date((SIGNUM_EPOCH + lastSeenTs) * 1000).toISOString()
+        : null;
+      agents.push({ ...agent, txCount: txList.length, lastSeen });
     }
     return agents;
   } catch {
@@ -90,7 +107,10 @@ export default async function AgentsSection() {
                   <div className="font-medium text-sm">{agent.name}</div>
                   <div className="text-xs font-mono mt-0.5" style={{ color: "var(--muted)" }}>{agent.address}</div>
                 </div>
-                <div className="text-xs whitespace-nowrap" style={{ color: "var(--muted)" }}>{agent.txCount} txs</div>
+                <div className="text-right">
+                  <div className="text-xs whitespace-nowrap" style={{ color: "var(--muted)" }}>{agent.txCount} txs</div>
+                  <div className="text-xs whitespace-nowrap mt-0.5" style={{ color: "var(--muted)", opacity: 0.7 }}>seen {timeAgo(agent.lastSeen)}</div>
+                </div>
               </div>
               {agent.description && (
                 <p className="text-xs mb-2 leading-relaxed" style={{ color: "var(--muted)" }}>{agent.description}</p>

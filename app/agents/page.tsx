@@ -4,7 +4,18 @@ import Link from "next/link";
 
 const PAGE_SIZE = 20;
 
-type Agent = { alias: string; name: string; address: string; capabilities: string[]; description: string; txCount: number };
+function timeAgo(iso: string | null) {
+  if (!iso) return "never";
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  return `${Math.floor(hrs / 24)}d ago`;
+}
+
+type Agent = { alias: string; name: string; address: string; capabilities: string[]; description: string; txCount: number; lastSeen: string | null };
 
 export default function AgentsPage() {
   const [all, setAll] = useState<Agent[]>([]);
@@ -13,10 +24,13 @@ export default function AgentsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/agents").then((r) => r.json()).then((data) => {
+    const load = () => fetch("/api/agents").then((r) => r.json()).then((data) => {
       setAll(data.agents ?? []);
       setLoading(false);
     });
+    load();
+    const id = setInterval(load, 30000);
+    return () => clearInterval(id);
   }, []);
 
   const q = search.toLowerCase();
@@ -45,6 +59,7 @@ export default function AgentsPage() {
           <Link href="/activity" className="hover:text-white transition-colors">Activity</Link>
           <Link href="/messages" className="hover:text-white transition-colors">Messages</Link>
           <Link href="/log" className="hover:text-white transition-colors">Agent Log</Link>
+          <Link href="/docs" className="hover:text-white transition-colors">Docs</Link>
         </div>
       </nav>
 
@@ -77,13 +92,18 @@ export default function AgentsPage() {
         ) : (
           <div className="space-y-3">
             {visible.map((agent) => (
-              <div key={agent.alias} className="rounded-lg p-4" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
+              <Link key={agent.alias} href={`/agents/${agent.alias}`}
+              className="rounded-lg p-4 block transition-colors hover:border-[var(--accent)]/40"
+              style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <div>
                     <div className="font-medium text-sm">{agent.name}</div>
                     <div className="text-xs font-mono mt-0.5" style={{ color: "var(--muted)" }}>{agent.address}</div>
                   </div>
-                  <div className="text-xs whitespace-nowrap" style={{ color: "var(--muted)" }}>{agent.txCount} txs</div>
+                  <div className="text-right">
+                    <div className="text-xs whitespace-nowrap" style={{ color: "var(--muted)" }}>{agent.txCount} txs</div>
+                    <div className="text-xs whitespace-nowrap mt-0.5" style={{ color: "var(--muted)", opacity: 0.7 }}>seen {timeAgo(agent.lastSeen)}</div>
+                  </div>
                 </div>
                 {agent.description && (
                   <p className="text-xs mb-2 leading-relaxed" style={{ color: "var(--muted)" }}>{agent.description}</p>
@@ -96,7 +116,7 @@ export default function AgentsPage() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

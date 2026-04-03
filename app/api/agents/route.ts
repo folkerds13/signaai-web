@@ -34,7 +34,14 @@ export async function GET() {
         firstIndex: "0",
         lastIndex: "99",
       });
-      const txCount = txData.transactions?.length ?? 0;
+      const txList = txData.transactions ?? [];
+      const txCount = txList.length;
+
+      const SIGNUM_EPOCH = new Date("2014-01-11T02:00:00Z").getTime() / 1000;
+      const lastSeenTs = txList[0]?.timestamp;
+      const lastSeen = lastSeenTs
+        ? new Date((SIGNUM_EPOCH + lastSeenTs) * 1000).toISOString()
+        : null;
 
       agents.push({
         alias: alias.aliasName,
@@ -44,6 +51,7 @@ export async function GET() {
         description: metadata.description ?? "",
         version: metadata.version ?? "1.0",
         txCount,
+        lastSeen,
       });
     }
   }

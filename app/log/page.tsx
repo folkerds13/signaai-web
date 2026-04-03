@@ -36,10 +36,13 @@ export default function LogPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/agentlog").then((r) => r.json()).then((data) => {
+    const load = () => fetch("/api/agentlog").then((r) => r.json()).then((data) => {
       setAll(data.events ?? []);
       setLoading(false);
     });
+    load();
+    const id = setInterval(load, 30000);
+    return () => clearInterval(id);
   }, []);
 
   const q = search.toLowerCase();
@@ -69,6 +72,7 @@ export default function LogPage() {
           <Link href="/activity" className="hover:text-white transition-colors">Activity</Link>
           <Link href="/messages" className="hover:text-white transition-colors">Messages</Link>
           <Link href="/log" className="text-white transition-colors">Agent Log</Link>
+          <Link href="/docs" className="hover:text-white transition-colors">Docs</Link>
         </div>
       </nav>
 
