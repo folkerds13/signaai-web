@@ -105,7 +105,9 @@ export default async function ActivitySection() {
       ) : (
         <div className="space-y-2">
           {transactions.map((tx) => (
-            <div key={tx.id} className="rounded-lg px-3 py-2.5 flex items-start gap-3" style={{ background: "var(--background)", border: "1px solid var(--border)" }}>
+            <a key={tx.id} href={`https://explorer.signum.network/tx/${tx.id}`} target="_blank" rel="noopener noreferrer"
+              className="rounded-lg px-3 py-2.5 flex items-start gap-3 transition-colors hover:border-[var(--accent)]/40 block"
+              style={{ background: "var(--background)", border: "1px solid var(--border)" }}>
               <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: TYPE_COLORS[tx.type] ?? "var(--muted)" }}></div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2">
@@ -122,7 +124,7 @@ export default async function ActivitySection() {
                   <div className="text-xs mt-0.5 truncate font-mono" style={{ color: "var(--muted)", opacity: 0.7 }}>{tx.message}</div>
                 )}
               </div>
-            </div>
+            </a>
           ))}
         </div>
       )}
