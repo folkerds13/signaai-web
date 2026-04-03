@@ -1,9 +1,49 @@
+const NODE = "https://europe.signum.network";
+const REGISTRY_ACCOUNTS = [
+  "S-PS4K-2KE2-8LEV-HD2YE",
+  "S-44S7-32XB-5DM5-5AL3K",
+];
+
+async function signumGet(params: Record<string, string>) {
+  const qs = new URLSearchParams({ requestType: params.requestType, ...params }).toString();
+  const res = await fetch(`${NODE}/burst?${qs}`, { next: { revalidate: 60 } });
+  return res.json();
+}
+
 async function getAgents() {
   try {
-    const base = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
-    const res = await fetch(`${base}/api/agents`, { next: { revalidate: 60 } });
-    const data = await res.json();
-    return data.agents ?? [];
+    const agents = [];
+    const seen = new Set<string>();
+
+    for (const account of REGISTRY_ACCOUNTS) {
+      const data = await signumGet({ requestType: "getAliases", account });
+      for (const alias of data.aliases ?? []) {
+        const uri: string = alias.aliasURI ?? "";
+        if (!uri.includes("sig-agent:")) continue;
+        if (seen.has(alias.aliasName)) continue;
+        seen.add(alias.aliasName);
+
+        let metadata: Record<string, unknown> = {};
+        try { metadata = JSON.parse(uri.split("sig-agent:")[1]); } catch {}
+
+        const txData = await signumGet({
+          requestType: "getAccountTransactions",
+          account: (metadata.address as string) || account,
+          firstIndex: "0",
+          lastIndex: "99",
+        });
+
+        agents.push({
+          alias: alias.aliasName,
+          name: (metadata.name as string) ?? alias.aliasName,
+          address: (metadata.address as string) ?? "",
+          capabilities: (metadata.capabilities as string[]) ?? [],
+          description: (metadata.description as string) ?? "",
+          txCount: txData.transactions?.length ?? 0,
+        });
+      }
+    }
+    return agents;
   } catch {
     return [];
   }
@@ -22,32 +62,23 @@ export default async function AgentsSection() {
       </div>
 
       {agents.length === 0 ? (
-        <p className="text-sm py-8 text-center" style={{ color: "var(--muted)" }}>Loading agents...</p>
+        <p className="text-sm py-8 text-center" style={{ color: "var(--muted)" }}>No agents found</p>
       ) : (
         <div className="space-y-3">
-          {agents.map((agent: {
-            alias: string;
-            name: string;
-            address: string;
-            capabilities: string[];
-            description: string;
-            txCount: number;
-          }) => (
-            <div key={agent.alias} className="rounded-lg p-4 transition-colors" style={{ background: "var(--background)", border: "1px solid var(--border)" }}>
+          {agents.map((agent) => (
+            <div key={agent.alias} className="rounded-lg p-4" style={{ background: "var(--background)", border: "1px solid var(--border)" }}>
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div>
                   <div className="font-medium text-sm">{agent.name}</div>
                   <div className="text-xs font-mono mt-0.5" style={{ color: "var(--muted)" }}>{agent.address}</div>
                 </div>
-                <div className="text-xs whitespace-nowrap" style={{ color: "var(--muted)" }}>
-                  {agent.txCount} txs
-                </div>
+                <div className="text-xs whitespace-nowrap" style={{ color: "var(--muted)" }}>{agent.txCount} txs</div>
               </div>
               {agent.description && (
                 <p className="text-xs mb-2 leading-relaxed" style={{ color: "var(--muted)" }}>{agent.description}</p>
               )}
               <div className="flex flex-wrap gap-1.5">
-                {(agent.capabilities as string[]).map((cap) => (
+                {agent.capabilities.map((cap) => (
                   <span key={cap} className="text-xs px-2 py-0.5 rounded-md font-mono" style={{ background: "rgba(129,140,248,0.1)", color: "var(--accent)", border: "1px solid rgba(129,140,248,0.15)" }}>
                     {cap}
                   </span>

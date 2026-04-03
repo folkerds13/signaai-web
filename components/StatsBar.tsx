@@ -1,8 +1,33 @@
+const NODE = "https://europe.signum.network";
+const ACCOUNTS = ["S-PS4K-2KE2-8LEV-HD2YE", "S-44S7-32XB-5DM5-5AL3K"];
+const AT_ADDRESS = "S-FH56-5NA6-E75H-DPAM9";
+
+async function signumGet(params: Record<string, string>) {
+  const qs = new URLSearchParams({ requestType: params.requestType, ...params }).toString();
+  const res = await fetch(`${NODE}/burst?${qs}`, { next: { revalidate: 60 } });
+  return res.json();
+}
+
 async function getStats() {
   try {
-    const base = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
-    const res = await fetch(`${base}/api/stats`, { next: { revalidate: 60 } });
-    return res.json();
+    const [blockData, atAccountData, ...accountResults] = await Promise.all([
+      signumGet({ requestType: "getMiningInfo" }),
+      signumGet({ requestType: "getAccount", account: AT_ADDRESS }),
+      ...ACCOUNTS.map((account) => signumGet({ requestType: "getAccount", account })),
+    ]);
+
+    let atStatus = null;
+    if (atAccountData.account) {
+      const atData = await signumGet({ requestType: "getAT", at: atAccountData.account });
+      atStatus = atData.finished ? "finished" : atData.frozen ? "frozen" : "active";
+    }
+
+    return {
+      blockHeight: parseInt(blockData.height ?? "0"),
+      atStatus,
+      atBalance: parseInt(atAccountData.balanceNQT ?? "0") / 100_000_000,
+      balances: accountResults.map((r) => parseInt(r.balanceNQT ?? "0") / 100_000_000),
+    };
   } catch {
     return null;
   }
@@ -14,10 +39,10 @@ export default async function StatsBar() {
   const items = [
     { label: "Network", value: "Signum Mainnet" },
     { label: "Block Height", value: stats?.blockHeight ? `#${stats.blockHeight.toLocaleString()}` : "—" },
-    { label: "AT Contract", value: stats?.atContract?.status ? stats.atContract.status.toUpperCase() : "—" },
-    { label: "AT Balance", value: stats?.atContract?.balance != null ? `${stats.atContract.balance.toFixed(4)} SIGNA` : "—" },
-    { label: "Dev Wallet", value: stats?.balances?.[0]?.balance != null ? `${stats.balances[0].balance.toFixed(2)} SIGNA` : "—" },
-    { label: "Worker Wallet", value: stats?.balances?.[1]?.balance != null ? `${stats.balances[1].balance.toFixed(2)} SIGNA` : "—" },
+    { label: "AT Contract", value: stats?.atStatus ? stats.atStatus.toUpperCase() : "—" },
+    { label: "AT Balance", value: stats?.atBalance != null ? `${stats.atBalance.toFixed(4)} SIGNA` : "—" },
+    { label: "Dev Wallet", value: stats?.balances?.[0] != null ? `${stats.balances[0].toFixed(2)} SIGNA` : "—" },
+    { label: "Worker Wallet", value: stats?.balances?.[1] != null ? `${stats.balances[1].toFixed(2)} SIGNA` : "—" },
   ];
 
   return (
