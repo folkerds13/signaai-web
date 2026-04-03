@@ -222,7 +222,7 @@ export default function Home() {
             { name: "BitMart", desc: "SIGNA/USDT spot trading", url: "https://www.bitmart.com/en-US/crypto/SIGNA", badge: null },
             { name: "BTDEX", desc: "Signum's native DEX desktop app — no KYC, no account needed", url: "https://github.com/btdex/btdex/releases", badge: "Decentralized" },
             { name: "Dex-Trade", desc: "SIGNA/USDT spot trading", url: "https://dex-trade.com/spot/trading/SIGNAUSDT", badge: null },
-            { name: "BYDFi", desc: "SIGNA trading and price info", url: "https://www.bydfi.com/en/price/signa", badge: null },
+            { name: "All Exchanges", desc: "Full list of exchanges on the official Signum website", url: "https://signum.network/exchanges", badge: null },
           ].map((ex) => (
             <a key={ex.name} href={ex.url} target="_blank" rel="noopener noreferrer"
               className="rounded-xl p-5 flex items-start justify-between gap-3 transition-colors hover:border-[var(--accent)]/40 group"
