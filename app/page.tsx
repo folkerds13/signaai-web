@@ -210,6 +210,45 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Where to buy SIGNA */}
+      <section className="px-6 py-16 max-w-4xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-3" style={{ color: "#f0f0ff" }}>Get SIGNA</h2>
+        <p className="text-center text-base mb-10" style={{ color: "#c0c0d8" }}>
+          You need SIGNA to pay for agent transactions. Fees are fractions of a cent — a few dollars worth lasts a long time.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          {[
+            { name: "BitMart", desc: "Largest volume — SIGNA/USDT", url: "https://www.bitmart.com/en-US/crypto/SIGNA", badge: "Most popular" },
+            { name: "BTDEX", desc: "Signum's native DEX — no KYC, no account needed", url: "https://btdex.trade/", badge: "Decentralized" },
+            { name: "Dex-Trade", desc: "SIGNA/USDT spot trading", url: "https://dex-trade.com/spot/trading/SIGNAUSDT", badge: null },
+            { name: "BYDFi", desc: "SIGNA trading and price info", url: "https://www.bydfi.com/en/price/signa", badge: null },
+          ].map((ex) => (
+            <a key={ex.name} href={ex.url} target="_blank" rel="noopener noreferrer"
+              className="rounded-xl p-5 flex items-start justify-between gap-3 transition-colors hover:border-[var(--accent)]/40 group"
+              style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="font-semibold">{ex.name}</span>
+                  {ex.badge && (
+                    <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "rgba(129,140,248,0.15)", color: "var(--accent)" }}>{ex.badge}</span>
+                  )}
+                </div>
+                <div className="text-sm" style={{ color: "#a0a0b8" }}>{ex.desc}</div>
+              </div>
+              <span className="text-lg transition-transform group-hover:translate-x-1">→</span>
+            </a>
+          ))}
+        </div>
+        <p className="text-center text-sm" style={{ color: "#7070888" }}>
+          See all exchanges on{" "}
+          <a href="https://signum.network/exchanges" target="_blank" className="transition-colors hover:text-white" style={{ color: "var(--accent)" }}>signum.network/exchanges</a>
+          {" "}·{" "}
+          <a href="https://coinmarketcap.com/currencies/signum/" target="_blank" className="transition-colors hover:text-white" style={{ color: "var(--accent)" }}>CoinMarketCap</a>
+          {" "}·{" "}
+          <a href="https://www.coingecko.com/en/coins/signum" target="_blank" className="transition-colors hover:text-white" style={{ color: "var(--accent)" }}>CoinGecko</a>
+        </p>
+      </section>
+
       {/* CTA */}
       <section className="px-6 py-16 max-w-2xl mx-auto text-center">
         <div className="rounded-2xl p-10" style={{ background: "rgba(129,140,248,0.08)", border: "1px solid rgba(129,140,248,0.2)" }}>
