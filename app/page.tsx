@@ -195,7 +195,7 @@ export default function Home() {
                 <tr key={i} style={{ borderBottom: i < 5 ? "1px solid var(--border)" : "none", background: row.highlight ? "rgba(129,140,248,0.04)" : "transparent" }}>
                   <td className="px-6 py-4 text-base font-medium" style={{ color: "#d0d0e8" }}>{row.feature}</td>
                   <td className="px-6 py-4 text-center text-base font-semibold" style={{ color: "var(--green)" }}>{row.signum}</td>
-                  <td className="px-6 py-4 text-center text-base" style={{ color: "#a0a0b8" }}>{row.eth}</td>
+                  <td className="px-6 py-4 text-center text-base font-medium" style={{ color: "#d0d0e8" }}>{row.eth}</td>
                 </tr>
               ))}
             </tbody>
