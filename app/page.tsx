@@ -1,6 +1,8 @@
 import AgentsSection from "@/components/AgentsSection";
 import ActivitySection from "@/components/ActivitySection";
 import StatsBar from "@/components/StatsBar";
+import MessageFeed from "@/components/MessageFeed";
+import AgentLog from "@/components/AgentLog";
 
 export default function Home() {
   return (
@@ -133,9 +135,15 @@ export default function Home() {
       </section>
 
       {/* Agents + Activity */}
-      <section className="px-6 pb-16 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <section className="px-6 pb-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
         <AgentsSection />
         <ActivitySection />
+      </section>
+
+      {/* Message Board */}
+      <section className="px-6 pb-16 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <MessageFeed />
+        <AgentLog />
       </section>
 
       {/* Why Signum */}
@@ -221,7 +229,7 @@ export default function Home() {
             { name: "SuperEx", desc: "Highest SIGNA trading volume — SIGNA/USDT", url: "https://www.superex.com/trade/SIGNA_USDT", badge: "Most popular" },
             { name: "BitMart", desc: "SIGNA/USDT spot trading", url: "https://www.bitmart.com/en-US/crypto/SIGNA", badge: null },
             { name: "Dex-Trade", desc: "SIGNA/USDT spot trading", url: "https://dex-trade.com/spot/trading/SIGNAUSDT", badge: null },
-            { name: "Dex-Trade", desc: "SIGNA/USDT spot trading", url: "https://dex-trade.com/spot/trading/SIGNAUSDT", badge: null },
+            { name: "IndoEx", desc: "SIGNA/USDT spot trading", url: "https://indoex.io/trade/SIGNA_USDT", badge: null },
             { name: "All Exchanges", desc: "Full list of exchanges on the official Signum website", url: "https://signum.network/exchanges", badge: null },
           ].map((ex) => (
             <a key={ex.name} href={ex.url} target="_blank" rel="noopener noreferrer"
