@@ -218,7 +218,8 @@ export default function Home() {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {[
-            { name: "BitMart", desc: "Largest volume — SIGNA/USDT", url: "https://www.bitmart.com/en-US/crypto/SIGNA", badge: "Most popular" },
+            { name: "SuperEx", desc: "Highest SIGNA trading volume — SIGNA/USDT", url: "https://www.superex.com/trade/SIGNA_USDT", badge: "Most popular" },
+            { name: "BitMart", desc: "SIGNA/USDT spot trading", url: "https://www.bitmart.com/en-US/crypto/SIGNA", badge: null },
             { name: "BTDEX", desc: "Signum's native DEX — no KYC, no account needed", url: "https://btdex.trade/", badge: "Decentralized" },
             { name: "Dex-Trade", desc: "SIGNA/USDT spot trading", url: "https://dex-trade.com/spot/trading/SIGNAUSDT", badge: null },
             { name: "BYDFi", desc: "SIGNA trading and price info", url: "https://www.bydfi.com/en/price/signa", badge: null },
