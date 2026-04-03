@@ -15,6 +15,9 @@ async function getAgents() {
     const agents = [];
     const seen = new Set<string>();
 
+    // Track best alias per address — prefer the one with a description
+    const byAddress = new Map<string, { alias: string; name: string; address: string; capabilities: string[]; description: string; timestamp: number }>();
+
     for (const account of REGISTRY_ACCOUNTS) {
       const data = await signumGet({ requestType: "getAliases", account });
       for (const alias of data.aliases ?? []) {
@@ -26,22 +29,33 @@ async function getAgents() {
         let metadata: Record<string, unknown> = {};
         try { metadata = JSON.parse(uri.split("sig-agent:")[1]); } catch {}
 
-        const txData = await signumGet({
-          requestType: "getAccountTransactions",
-          account: (metadata.address as string) || account,
-          firstIndex: "0",
-          lastIndex: "99",
-        });
+        const address = (metadata.address as string) ?? account;
+        const existing = byAddress.get(address);
+        const description = (metadata.description as string) ?? "";
 
-        agents.push({
-          alias: alias.aliasName,
-          name: (metadata.name as string) ?? alias.aliasName,
-          address: (metadata.address as string) ?? "",
-          capabilities: (metadata.capabilities as string[]) ?? [],
-          description: (metadata.description as string) ?? "",
-          txCount: txData.transactions?.length ?? 0,
-        });
+        // Keep this alias if it has a description and the existing one doesn't, or if it's newer
+        if (!existing || (description && !existing.description) || alias.timestamp > existing.timestamp) {
+          byAddress.set(address, {
+            alias: alias.aliasName,
+            name: (metadata.name as string) ?? alias.aliasName,
+            address,
+            capabilities: (metadata.capabilities as string[]) ?? [],
+            description,
+            timestamp: alias.timestamp,
+          });
+        }
       }
+    }
+
+    // Fetch tx counts and build final list
+    for (const agent of byAddress.values()) {
+      const txData = await signumGet({
+        requestType: "getAccountTransactions",
+        account: agent.address,
+        firstIndex: "0",
+        lastIndex: "99",
+      });
+      agents.push({ ...agent, txCount: txData.transactions?.length ?? 0 });
     }
     return agents;
   } catch {
