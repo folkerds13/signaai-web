@@ -229,7 +229,6 @@ export default function Home() {
             { name: "SuperEx", desc: "Highest SIGNA trading volume — SIGNA/USDT", url: "https://www.superex.com/trade/SIGNA_USDT", badge: "Most popular" },
             { name: "BitMart", desc: "SIGNA/USDT spot trading", url: "https://www.bitmart.com/en-US/crypto/SIGNA", badge: null },
             { name: "Dex-Trade", desc: "SIGNA/USDT spot trading", url: "https://dex-trade.com/spot/trading/SIGNAUSDT", badge: null },
-            { name: "IndoEx", desc: "SIGNA/USDT spot trading", url: "https://indoex.io/trade/SIGNA_USDT", badge: null },
             { name: "All Exchanges", desc: "Full list of exchanges on the official Signum website", url: "https://signum.network/exchanges", badge: null },
           ].map((ex) => (
             <a key={ex.name} href={ex.url} target="_blank" rel="noopener noreferrer"
