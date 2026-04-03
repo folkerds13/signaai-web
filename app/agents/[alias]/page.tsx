@@ -62,7 +62,9 @@ async function getAgent(aliasName: string) {
   return null;
 }
 
-async function getAgentTxs(address: string) {
+type AgentTx = { id: string; type: string; sender: string; recipient: string; amount: number; message: string | null; timestamp: string };
+
+async function getAgentTxs(address: string): Promise<AgentTx[]> {
   const data = await signumGet({
     requestType: "getAccountTransactions",
     account: address,
