@@ -27,16 +27,33 @@ export default function MessagesPage() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [loadingOlder, setLoadingOlder] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [nextOffset, setNextOffset] = useState(100);
 
   useEffect(() => {
     const load = () => fetch("/api/messages").then((r) => r.json()).then((data) => {
       setAll(data.messages ?? []);
+      setHasMore(data.hasMore ?? false);
       setLoading(false);
     });
     load();
     const id = setInterval(load, 30000);
     return () => clearInterval(id);
   }, []);
+
+  async function loadOlder() {
+    setLoadingOlder(true);
+    const data = await fetch(`/api/messages?offset=${nextOffset}`).then((r) => r.json());
+    setAll((prev) => {
+      const seen = new Set(prev.map((m) => m.id));
+      const fresh = (data.messages ?? []).filter((m: Msg) => !seen.has(m.id));
+      return [...prev, ...fresh];
+    });
+    setHasMore(data.hasMore ?? false);
+    setNextOffset(data.nextOffset ?? nextOffset + 100);
+    setLoadingOlder(false);
+  }
 
   const q = search.toLowerCase();
   const filtered = all.filter((m) =>
@@ -120,6 +137,16 @@ export default function MessagesPage() {
             <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages}
               className="px-4 py-2 rounded-lg text-sm disabled:opacity-40"
               style={{ background: "var(--card)", border: "1px solid var(--border)" }}>Next →</button>
+          </div>
+        )}
+
+        {hasMore && page === totalPages && (
+          <div className="flex justify-center mt-4">
+            <button onClick={loadOlder} disabled={loadingOlder}
+              className="px-5 py-2 rounded-lg text-sm disabled:opacity-40 transition-colors"
+              style={{ background: "var(--card)", border: "1px solid var(--border)", color: "var(--muted)" }}>
+              {loadingOlder ? "Loading…" : "Load older messages ↓"}
+            </button>
           </div>
         )}
       </section>

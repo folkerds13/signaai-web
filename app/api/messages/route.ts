@@ -15,11 +15,16 @@ function signumTs(ts: number) {
   return new Date((SIGNUM_EPOCH + ts) * 1000).toISOString();
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const offset = parseInt(searchParams.get("offset") ?? "0");
+    const firstIndex = String(offset);
+    const lastIndex = String(offset + 99);
+
     const results = await Promise.all(
       ACCOUNTS.map((account) =>
-        signumGet({ requestType: "getAccountTransactions", account, firstIndex: "0", lastIndex: "99" })
+        signumGet({ requestType: "getAccountTransactions", account, firstIndex, lastIndex })
       )
     );
     const seen = new Set<string>();
@@ -42,8 +47,10 @@ export async function GET() {
       }
     }
     messages.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-    return NextResponse.json({ messages });
+    const rawCounts = results.map((r) => r.transactions?.length ?? 0);
+    const hasMore = rawCounts.some((c) => c >= 100);
+    return NextResponse.json({ messages, hasMore, nextOffset: offset + 100 });
   } catch {
-    return NextResponse.json({ messages: [] });
+    return NextResponse.json({ messages: [], hasMore: false, nextOffset: 0 });
   }
 }

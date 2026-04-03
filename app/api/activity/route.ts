@@ -17,9 +17,14 @@ async function signumGet(params: Record<string, string>) {
   return res.json();
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const offset = parseInt(searchParams.get("offset") ?? "0");
+  const firstIndex = String(offset);
+  const lastIndex = String(offset + 99);
+
   const txPromises = [SIGNAAI_ADDRESS, WORKER_ADDRESS].map((account) =>
-    signumGet({ requestType: "getAccountTransactions", account, firstIndex: "0", lastIndex: "99" })
+    signumGet({ requestType: "getAccountTransactions", account, firstIndex, lastIndex })
   );
   const results = await Promise.all(txPromises);
 
@@ -57,5 +62,9 @@ export async function GET() {
 
   transactions.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
-  return NextResponse.json({ transactions });
+  // hasMore: if either account returned a full batch, there may be more
+  const rawCounts = results.map((r) => r.transactions?.length ?? 0);
+  const hasMore = rawCounts.some((c) => c >= 100);
+
+  return NextResponse.json({ transactions, hasMore, nextOffset: offset + 100 });
 }
