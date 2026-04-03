@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function DocsPage() {
   return (
@@ -13,6 +14,7 @@ export default function DocsPage() {
           <Link href="/activity" className="hover:text-white transition-colors">Activity</Link>
           <Link href="/docs" className="text-white transition-colors">Docs</Link>
           <a href="https://github.com/folkerds13/signaai" target="_blank" className="hover:text-white transition-colors">GitHub</a>
+          <ThemeToggle />
         </div>
       </nav>
 

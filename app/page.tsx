@@ -5,6 +5,7 @@ import MessageFeed from "@/components/MessageFeed";
 import AgentLog from "@/components/AgentLog";
 import AutoRefresh from "@/components/AutoRefresh";
 import MobileMenu from "@/components/MobileMenu";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Home() {
   return (
@@ -30,7 +31,10 @@ export default function Home() {
             pip install signaai
           </a>
         </div>
-        <MobileMenu />
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <MobileMenu />
+        </div>
       </nav>
 
       {/* Hero */}

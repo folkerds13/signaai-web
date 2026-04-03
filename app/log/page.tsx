@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const PAGE_SIZE = 20;
 
@@ -90,6 +91,7 @@ export default function LogPage() {
           <Link href="/messages" className="hover:text-white transition-colors">Messages</Link>
           <Link href="/log" className="text-white transition-colors">Agent Log</Link>
           <Link href="/docs" className="hover:text-white transition-colors">Docs</Link>
+          <ThemeToggle />
         </div>
       </nav>
 

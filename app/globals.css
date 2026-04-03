@@ -12,8 +12,28 @@
   --muted: #6b7280;
 }
 
+html.light {
+  --background: #f8f8fc;
+  --card: #ffffff;
+  --border: #e2e2ee;
+  --accent: #6366f1;
+  --accent-dim: rgba(99, 102, 241, 0.1);
+  --green: #059669;
+  --yellow: #d97706;
+  --red: #dc2626;
+  --muted: #6b7280;
+}
+
 body {
   background: var(--background);
   color: #e2e2f0;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+html.light body {
+  color: #1a1a2e;
+}
+
+html.light a {
+  color: inherit;
 }
