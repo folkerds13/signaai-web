@@ -6,6 +6,7 @@ import AgentLog from "@/components/AgentLog";
 import AutoRefresh from "@/components/AutoRefresh";
 import MobileMenu from "@/components/MobileMenu";
 import ThemeToggle from "@/components/ThemeToggle";
+import WhySignum from "@/components/WhySignum";
 
 export default function Home() {
   return (
@@ -203,63 +204,7 @@ export default function Home() {
         <p className="text-center text-lg mb-10" style={{ color: "#c0c0d8" }}>
           Every competitor is building on Ethereum or Solana. Signum is greenfield — and technically superior for agent payments.
         </p>
-        <div className="rounded-xl overflow-hidden" style={{ background: "var(--card)", border: "1px solid rgba(129,140,248,0.3)" }}>
-          <table className="w-full">
-            <thead>
-              <tr style={{ borderBottom: "1px solid rgba(129,140,248,0.2)", background: "rgba(129,140,248,0.08)" }}>
-                <th className="text-left px-6 py-4 text-base font-semibold" style={{ color: "#e0e0f0" }}>Feature</th>
-                <th className="px-6 py-4 text-base font-bold" style={{ color: "var(--accent)" }}>Signum</th>
-                <th className="px-6 py-4 text-base font-semibold" style={{ color: "#c0c0d8" }}>Ethereum / Solana</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                {
-                  feature: "Smart contract execution",
-                  signum: "Self-executing — no keeper needed",
-                  eth: "Requires external keeper or relayer",
-                  highlight: true,
-                },
-                {
-                  feature: "Transaction fee",
-                  signum: "~$0.00003 fixed",
-                  eth: "Variable, often $1–$50+",
-                  highlight: true,
-                },
-                {
-                  feature: "Energy use",
-                  signum: "<0.002% of Bitcoin",
-                  eth: "High (PoW) or validator overhead",
-                  highlight: false,
-                },
-                {
-                  feature: "Running since",
-                  signum: "2014 (as Burstcoin)",
-                  eth: "2015 / 2020",
-                  highlight: false,
-                },
-                {
-                  feature: "Agent-to-agent payments",
-                  signum: "Native, 4-second blocks",
-                  eth: "Possible but expensive",
-                  highlight: true,
-                },
-                {
-                  feature: "Competitors building here",
-                  signum: "None yet — greenfield",
-                  eth: "Coinbase x402, Fetch.ai, Olas...",
-                  highlight: true,
-                },
-              ].map((row, i) => (
-                <tr key={i} style={{ borderBottom: i < 5 ? "1px solid var(--border)" : "none", background: row.highlight ? "rgba(129,140,248,0.04)" : "transparent" }}>
-                  <td className="px-6 py-4 text-base font-medium" style={{ color: "#d0d0e8" }}>{row.feature}</td>
-                  <td className="px-6 py-4 text-center text-base font-semibold" style={{ color: "var(--green)" }}>{row.signum}</td>
-                  <td className="px-6 py-4 text-center text-base font-medium" style={{ color: "#d0d0e8" }}>{row.eth}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <WhySignum />
         <div className="mt-6 text-center">
           <a href="https://www.signum.network/wp/Signum_Business_Whitepaper.pdf" target="_blank"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-colors hover:text-white"
