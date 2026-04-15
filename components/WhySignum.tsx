@@ -8,7 +8,7 @@ const ROWS = [
   { feature: "Running since",             signum: "2014 (as Burstcoin)",              eth: "2015 / 2020",                       highlight: false },
   { feature: "Agent-to-agent payments",  signum: "Native, 4-second blocks",           eth: "Possible but expensive",            highlight: true },
   { feature: "Competitors building here",signum: "None yet — greenfield",             eth: "Coinbase x402, Fetch.ai, Olas...",  highlight: true },
-  { feature: "Token distribution",       signum: "No pre-mine, no VC allocation — every token fairly distributed from day one", eth: "ETH: 72M pre-mined at genesis. Solana: 48% to team, investors & foundation at launch", highlight: true },
+  { feature: "Token distribution",       signum: "No pre-mine, no VC allocation — fairly distributed from day one", eth: "ETH: 72M pre-mined. Solana: 48% to insiders at launch", highlight: true },
 ];
 
 export default function WhySignum() {
