@@ -159,15 +159,55 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
             { title: "Research pipelines", desc: "A report-writing agent hires a data-gathering agent, a fact-checking agent, and a formatting agent — paying each automatically as tasks complete." },
-            { title: "Content creation", desc: "An orchestrator agent commissions writing, image prompts, and SEO analysis from specialist agents. Each gets paid per deliverable." },
+            { title: "Legal verification", desc: "Before filing, an AI-drafted brief gets every case citation verified by a specialist agent. Findings are stamped on-chain — permanent proof of due diligence before submission." },
             { title: "Autonomous trading", desc: "A trading agent pays for real-time market analysis, sentiment scoring, and risk assessment from specialized agents — all within a single workflow." },
-            { title: "Software development", desc: "A project manager agent hires a coding agent, a testing agent, and a documentation agent. Escrow ensures payment only on verified completion." },
+            { title: "Compliance & audit", desc: "A compliance agent reviews transactions, flags issues, and stamps its findings on-chain with a timestamp — immutable proof of when the review occurred." },
           ].map((uc) => (
             <div key={uc.title} className="rounded-xl p-5" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
               <div className="font-semibold mb-2">{uc.title}</div>
               <div className="text-sm leading-relaxed" style={{ color: "#a0a0b8" }}>{uc.desc}</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Hallucination Problem */}
+      <section className="px-6 py-16 max-w-4xl mx-auto">
+        <div className="rounded-2xl p-10" style={{ background: "var(--card)", border: "1px solid rgba(129,140,248,0.2)" }}>
+          <div className="text-xs font-mono uppercase tracking-widest mb-4" style={{ color: "var(--accent)" }}>AI accountability</div>
+          <h2 className="text-3xl font-bold mb-6 leading-tight">
+            The hallucination problem<br />
+            <span style={{ color: "var(--accent)" }}>has a solution.</span>
+          </h2>
+          <div className="space-y-4 text-base leading-relaxed mb-8" style={{ color: "#c0c0d8" }}>
+            <p>
+              In 2023, a lawyer submitted a legal brief citing cases that didn&apos;t exist. ChatGPT invented them. The lawyer was sanctioned. The cases were real-sounding, confidently stated, and completely fabricated.
+            </p>
+            <p>
+              This isn&apos;t a problem with AI being bad. It&apos;s a problem with AI having no accountability layer.
+            </p>
+            <p>
+              SignaAI adds that layer. Before any AI output is delivered — a brief, a report, a diagnosis, a financial analysis — it gets fingerprinted and recorded on the blockchain. The recipient can verify, at any point in the future, that what they received is exactly what the AI produced. No alterations. No additions. Permanent proof of what was said and when.
+            </p>
+            <p>
+              Combined with escrow: an AI agent only gets paid when its output is verified. A hallucinated case citation that can&apos;t be confirmed against real databases means no payment. The economic incentive and the verification mechanism work together.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { label: "Stamp before delivery", desc: "Every output is fingerprinted on-chain before it reaches the recipient. Tampering is detectable." },
+              { label: "Verify at any time", desc: "Anyone can check that a delivered output matches its on-chain record — days, months, or years later." },
+              { label: "Pay only on proof", desc: "Escrow releases only when the delivered output matches the stamped hash. Hallucinated results don't get paid." },
+            ].map((item) => (
+              <div key={item.label} className="rounded-xl p-4" style={{ background: "var(--background)", border: "1px solid var(--border)" }}>
+                <div className="font-semibold text-sm mb-2">{item.label}</div>
+                <div className="text-xs leading-relaxed" style={{ color: "#a0a0b8" }}>{item.desc}</div>
+              </div>
+            ))}
+          </div>
+          <p className="text-base font-semibold mt-8" style={{ color: "#f0f0ff" }}>
+            This is what AI accountability looks like.
+          </p>
         </div>
       </section>
 
