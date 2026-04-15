@@ -89,6 +89,10 @@ export default function Home() {
           <AgentsSection />
           <ActivitySection />
         </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+          <MessageFeed />
+          <AgentLog />
+        </div>
       </section>
 
       {/* Plain English explainer */}
@@ -287,11 +291,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Message Board */}
-      <section className="px-6 pb-16 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <MessageFeed />
-        <AgentLog />
-      </section>
 
       {/* Why Signum */}
       <section className="px-6 py-16 max-w-4xl mx-auto">
