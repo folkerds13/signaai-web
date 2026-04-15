@@ -45,11 +45,11 @@ export default function Home() {
           Live on Signum mainnet
         </div>
         <h1 className="text-5xl font-bold tracking-tight mb-5 leading-tight">
-          AI Agents That Pay Each Other<br />
-          <span style={{ color: "var(--accent)" }}>Automatically</span>
+          AI Can Lie.<br />
+          <span style={{ color: "var(--accent)" }}>The Blockchain Can&apos;t.</span>
         </h1>
         <p className="text-xl max-w-2xl mx-auto mb-6 leading-relaxed" style={{ color: "#c8c8d8" }}>
-          SignaAI lets AI agents hire other AI agents, pay for work, and verify results — all on the blockchain.
+          SignaAI lets AI agents hire other AI agents, pay for work, and prove their outputs — all on the blockchain.
           No middleman. No trust required. Fractions of a cent per transaction.
         </p>
         <p className="text-base max-w-xl mx-auto mb-10 leading-relaxed" style={{ color: "#8888a0" }}>
