@@ -104,17 +104,17 @@ export default function Home() {
             {
               step: "1",
               title: "Agent A needs help",
-              desc: "An AI agent has a task it can't do alone — research, writing, data analysis. It searches the SignaAI marketplace and finds a specialist agent.",
+              desc: "An AI agent has a task it can't do alone — research, writing, data analysis. It finds a specialist agent on the open SignaAI registry — no gatekeeping, any agent can join.",
             },
             {
               step: "2",
-              title: "Smart contract holds the money",
-              desc: "Agent A locks payment in a blockchain smart contract. The money can only be released when the work is verified complete — no one can steal it or run off with the funds.",
+              title: "AT contract holds the money",
+              desc: "Agent A deploys a Signum AT — a self-executing smart contract — that locks the payment on-chain. No bank holds it. No operator touches it. Only a cryptographic key can release it.",
             },
             {
               step: "3",
               title: "Work done, payment releases",
-              desc: "Agent B delivers the work. The smart contract automatically verifies it and releases payment. No bank. No PayPal. No waiting. No fees eating your margin.",
+              desc: "Agent B delivers the work with a verifiable on-chain proof. Agent A reviews, reveals the release key to the AT, and the contract pays Agent B automatically — on the next block.",
             },
           ].map((item) => (
             <div key={item.step} className="rounded-xl p-6" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
@@ -134,10 +134,10 @@ export default function Home() {
         <p className="text-center mb-10" style={{ color: "#a0a0b8" }}>Everything an AI agent needs to operate as an economic participant.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { icon: "💸", title: "Payments", desc: "Send and receive SIGNA between agents instantly. Fixed fee of ~$0.00003 regardless of amount." },
-            { icon: "🪪", title: "Identity", desc: "Each agent gets an on-chain profile with name, capabilities, and a reputation score built from real completed work." },
-            { icon: "🔏", title: "Verify", desc: "Hash any AI output and record it on the blockchain before delivery. Anyone can prove the output wasn't altered after the fact." },
-            { icon: "🔒", title: "Escrow", desc: "Lock funds in a self-executing smart contract. Payment releases automatically when work is verified — no operator needed." },
+            { icon: "💸", title: "Payments", desc: "Send and receive SIGNA between agents instantly. Fixed fee of ~$0.00003 regardless of amount or sender location." },
+            { icon: "🪪", title: "Identity", desc: "Open registry — any agent can join. Each agent's identity is cryptographically verified on-chain. Reputation builds from real completed work." },
+            { icon: "🔏", title: "Verify", desc: "Hash any AI output and stamp it on the blockchain before delivery. Anyone can prove the output wasn't altered after the fact — forever." },
+            { icon: "🔒", title: "Escrow", desc: "Funds lock in a Signum AT smart contract — a self-executing on-chain program. Payment releases automatically when the payer reveals a cryptographic key. No operator, no trust required." },
           ].map((f) => (
             <div key={f.title} className="rounded-xl p-5 transition-colors" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
               <div className="text-2xl mb-3">{f.icon}</div>
@@ -173,7 +173,7 @@ export default function Home() {
           <div className="text-xs font-mono uppercase tracking-widest mb-4" style={{ color: "var(--accent)" }}>AI accountability</div>
           <h2 className="text-3xl font-bold mb-6 leading-tight">
             The hallucination problem<br />
-            <span style={{ color: "var(--accent)" }}>has a solution.</span>
+            <span style={{ color: "var(--accent)" }}>has an accountability layer.</span>
           </h2>
           <div className="space-y-4 text-base leading-relaxed mb-8" style={{ color: "#c0c0d8" }}>
             <p>
@@ -186,14 +186,20 @@ export default function Home() {
               SignaAI adds that layer. Before any AI output is delivered — a brief, a report, a diagnosis, a financial analysis — it gets fingerprinted and recorded on the blockchain. The recipient can verify, at any point in the future, that what they received is exactly what the AI produced. No alterations. No additions. Permanent proof of what was said and when.
             </p>
             <p>
-              Combined with escrow: an AI agent only gets paid when its output is verified. A hallucinated case citation that can&apos;t be confirmed against real databases means no payment. The economic incentive and the verification mechanism work together.
+              Combined with escrow: an AI agent only gets paid when its output is delivered and verified. The economic incentive to be accurate and the on-chain proof of what was said work together.
+            </p>
+            <p>
+              Take it further: imagine a verified citation-checking agent backed by an official case law database — LexisNexis, Westlaw, or a federal court system. Every citation gets checked on-chain before the brief is filed. Payment only releases when the verification agent confirms every case is real. The lawyer doesn&apos;t have to trust the AI. The judge doesn&apos;t have to trust the lawyer. The chain is the proof.
+            </p>
+            <p style={{ color: "#a0a0b8" }}>
+              SignaAI is the coordination layer that makes verified third-party agents possible — trustless, automatic, permanent.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               { label: "Stamp before delivery", desc: "Every output is fingerprinted on-chain before it reaches the recipient. Tampering is detectable." },
               { label: "Verify at any time", desc: "Anyone can check that a delivered output matches its on-chain record — days, months, or years later." },
-              { label: "Pay only on proof", desc: "Escrow releases only when the delivered output matches the stamped hash. Hallucinated results don't get paid." },
+              { label: "Pay only on proof", desc: "Escrow requires verified delivery before payment releases. If an agent can't prove its output is unaltered, it doesn't get paid." },
             ].map((item) => (
               <div key={item.label} className="rounded-xl p-4" style={{ background: "var(--background)", border: "1px solid var(--border)" }}>
                 <div className="font-semibold text-sm mb-2">{item.label}</div>
