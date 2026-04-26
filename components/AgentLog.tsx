@@ -1,6 +1,6 @@
 const NODE = "https://europe.signum.network";
 const ACCOUNTS = ["S-PS4K-2KE2-8LEV-HD2YE", "S-44S7-32XB-5DM5-5AL3K"];
-const SIGNUM_EPOCH = new Date("2014-01-11T02:00:00Z").getTime() / 1000;
+const SIGNUM_EPOCH = new Date("2014-08-11T02:00:00Z").getTime() / 1000;
 
 async function signumGet(params: Record<string, string>) {
   const qs = new URLSearchParams({ requestType: params.requestType, ...params }).toString();
@@ -37,13 +37,20 @@ const EVENT_META: Record<EventType, { label: string; color: string; icon: string
   arbitration: { label: "Arbitration", color: "#f87171",        icon: "⚖️" },
 };
 
+function redactRaw(msg: string): string {
+  let out = msg.replace(/\|TG:[^\s]*/g, "").trim();
+  out = out.replace(/\d{8,10}:AA[A-Za-z0-9_\-]{30,}/g, "[redacted]");
+  return out;
+}
+
 function parseEvent(msg: string): { type: EventType; action: string } | null {
-  if (msg.startsWith("ESCROW_")) {
-    const action = msg.replace("ESCROW_", "").split(":")[0].toLowerCase();
+  if (msg.startsWith("ESCROW:")) {
+    const action = msg.slice("ESCROW:".length).split(":")[0].toLowerCase();
     return { type: "escrow", action };
   }
-  if (msg.startsWith("SIGNAAI_AGENT:")) return { type: "identity", action: "register" };
-  if (msg.startsWith("SIGNAAI_STAMP:")) return { type: "verify", action: "stamp" };
+  if (msg.startsWith("SIGPROOF:")) return { type: "verify", action: "stamp" };
+  if (msg.startsWith("TASK_COMPLETE:")) return { type: "identity", action: "reputation" };
+  if (msg.startsWith("AGENT:v1:register")) return { type: "identity", action: "register" };
   if (msg.startsWith("ARBIT_")) {
     const action = msg.replace("ARBIT_", "").split(":")[0].toLowerCase();
     return { type: "arbitration", action };
@@ -76,7 +83,7 @@ async function getAgentEvents() {
           ...parsed,
           sender: tx.senderRS ?? "",
           recipient: tx.recipientRS ?? "",
-          raw: msg.slice(0, 80),
+          raw: redactRaw(msg).slice(0, 80),
           timestamp: signumTs(tx.timestamp),
         });
       }
@@ -97,7 +104,7 @@ export default async function AgentLog() {
       <div className="flex items-center justify-between mb-4">
         <h2 className="font-semibold text-base">Agent Communication Log</h2>
         <div className="flex items-center gap-2">
-          <span className="text-xs" style={{ color: "var(--muted)" }}>protocol events · live</span>
+          <span className="text-xs" style={{ color: "var(--muted)" }}>protocol events · mainnet</span>
           <a href="/log" className="text-xs hover:text-white transition-colors" style={{ color: "var(--muted)" }}>View all →</a>
         </div>
       </div>

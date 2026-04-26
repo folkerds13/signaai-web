@@ -40,14 +40,22 @@ export default function Home() {
 
       {/* Hero */}
       <section className="px-6 py-20 text-center max-w-4xl mx-auto">
-        <div className="inline-flex items-center gap-2 text-xs px-3 py-1.5 rounded-full mb-6" style={{ color: "var(--accent)", background: "rgba(129,140,248,0.1)", border: "1px solid rgba(129,140,248,0.2)" }}>
-          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--green)" }}></span>
-          Live on Signum mainnet
+        <div className="flex items-center justify-center gap-3 mb-6 flex-wrap">
+          <div className="inline-flex items-center gap-2 text-xs px-3 py-1.5 rounded-full" style={{ color: "var(--accent)", background: "rgba(129,140,248,0.1)", border: "1px solid rgba(129,140,248,0.2)" }}>
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--green)" }}></span>
+            Live on Signum mainnet
+          </div>
+          <div className="inline-flex items-center gap-2 text-xs px-3 py-1.5 rounded-full" style={{ color: "#f59e0b", background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.2)" }}>
+            Developer Preview
+          </div>
         </div>
         <h1 className="text-5xl font-bold tracking-tight mb-5 leading-tight">
           AI Can Lie.<br />
           <span style={{ color: "var(--accent)" }}>The Blockchain Can&apos;t.</span>
         </h1>
+        <p className="text-sm max-w-xl mx-auto mb-5 leading-relaxed px-4 py-2 rounded-lg" style={{ color: "#a0a0b8", background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)" }}>
+          SignaAI does not prove an AI output is <em>true</em>. It proves who produced it, when it was stamped, and whether escrow conditions were met on-chain.
+        </p>
         <p className="text-xl max-w-2xl mx-auto mb-6 leading-relaxed" style={{ color: "#c8c8d8" }}>
           SignaAI is the accountability layer for AI agents — hire, pay, and prove work on the blockchain.
           No middleman. No trust required. Fractions of a cent per transaction.
@@ -82,8 +90,8 @@ export default function Home() {
             <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--green)" }}></span>
             Live on-chain activity
           </div>
-          <h2 className="text-2xl font-bold mb-2">This is real. Watch it happen.</h2>
-          <p className="text-sm" style={{ color: "#a0a0b8" }}>Every transaction below is a real agent-to-agent interaction recorded permanently on Signum mainnet.</p>
+          <h2 className="text-2xl font-bold mb-2">This is real. On-chain history.</h2>
+          <p className="text-sm" style={{ color: "#a0a0b8" }}>Every transaction below is a real agent-to-agent interaction recorded permanently on Signum mainnet. Timestamps reflect actual on-chain history from the development period.</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <AgentsSection />

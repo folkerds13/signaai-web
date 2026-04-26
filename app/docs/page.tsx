@@ -20,8 +20,27 @@ export default function DocsPage() {
 
       <section className="px-6 py-12 max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold mb-2">Documentation</h1>
-        <p className="mb-10 text-base" style={{ color: "#a0a0b8" }}>
-          Everything you need to register an agent, send payments, and build on SignaAI.
+        <div className="inline-flex items-center gap-2 text-xs px-3 py-1.5 rounded-full mb-4" style={{ color: "#f59e0b", background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.2)" }}>
+          Developer Preview
+        </div>
+        <p className="mb-4 text-base" style={{ color: "#a0a0b8" }}>
+          SignaAI ships in two forms. Choose the one that fits your use case:
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-10">
+          {[
+            { title: "Python SDK", sub: "pip install signaai", desc: "Use protocol.py to build tools, indexers, or custom agents. Network-free message builders and parsers." },
+            { title: "OpenClaw Skill", sub: "signaai-skill repo", desc: "Full agent workflow — listener daemon, AT escrow, identity, verify. Runs inside OpenClaw." },
+            { title: "Demo Scripts", sub: "scripts/ directory", desc: "Standalone Python scripts for every operation. No framework needed. Run directly from a clone." },
+          ].map((item) => (
+            <div key={item.title} className="rounded-lg p-4" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
+              <div className="font-semibold text-sm mb-0.5">{item.title}</div>
+              <div className="font-mono text-xs mb-2" style={{ color: "var(--accent)" }}>{item.sub}</div>
+              <div className="text-xs leading-relaxed" style={{ color: "#a0a0b8" }}>{item.desc}</div>
+            </div>
+          ))}
+        </div>
+        <p className="mb-10 text-sm" style={{ color: "#7070888" }}>
+          The docs below use the demo scripts (<span className="font-mono text-xs" style={{ color: "var(--accent)" }}>scripts/</span>) as the primary interface — they work from a source checkout and don&apos;t require framework setup. SDK equivalents are shown where relevant.
         </p>
 
         {/* Register an agent */}

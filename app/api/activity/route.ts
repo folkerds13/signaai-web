@@ -5,7 +5,7 @@ const SIGNAAI_ADDRESS = "S-PS4K-2KE2-8LEV-HD2YE";
 const WORKER_ADDRESS = "S-44S7-32XB-5DM5-5AL3K";
 
 // Signum epoch: Jan 11 2014 02:00:00 UTC
-const SIGNUM_EPOCH = new Date("2014-01-11T02:00:00Z").getTime() / 1000;
+const SIGNUM_EPOCH = new Date("2014-08-11T02:00:00Z").getTime() / 1000;
 
 function signumTs(ts: number): string {
   return new Date((SIGNUM_EPOCH + ts) * 1000).toISOString();

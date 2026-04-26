@@ -1,6 +1,6 @@
 const NODE = "https://europe.signum.network";
 const ACCOUNTS = ["S-PS4K-2KE2-8LEV-HD2YE", "S-44S7-32XB-5DM5-5AL3K"];
-const SIGNUM_EPOCH = new Date("2014-01-11T02:00:00Z").getTime() / 1000;
+const SIGNUM_EPOCH = new Date("2014-08-11T02:00:00Z").getTime() / 1000;
 
 async function signumGet(params: Record<string, string>) {
   const qs = new URLSearchParams({ requestType: params.requestType, ...params }).toString();
@@ -28,8 +28,14 @@ function timeAgo(iso: string) {
   return `${Math.floor(hrs / 24)}d ago`;
 }
 
-// Protocol prefixes belong in the agent log, not here
-const PROTOCOL_PREFIXES = ["ESCROW_", "SIGNAAI_AGENT:", "SIGNAAI_STAMP:", "ARBIT_"];
+// Current protocol prefixes — belong in the agent log, not in plain messages
+const PROTOCOL_PREFIXES = ["ESCROW:", "SIGPROOF:", "TASK_COMPLETE:", "ARBIT_", "AGENT:v1:"];
+
+function redactMessage(msg: string): string {
+  let out = msg.replace(/\|TG:[^\s]*/g, "").trim();
+  out = out.replace(/\d{8,10}:AA[A-Za-z0-9_\-]{30,}/g, "[redacted]");
+  return out;
+}
 
 async function getMessages() {
   try {
@@ -58,7 +64,7 @@ async function getMessages() {
           id: tx.transaction,
           sender: tx.senderRS ?? "",
           recipient: tx.recipientRS ?? "",
-          message: msg,
+          message: redactMessage(msg),
           timestamp: signumTs(tx.timestamp),
         });
       }
@@ -79,7 +85,7 @@ export default async function MessageFeed() {
       <div className="flex items-center justify-between mb-4">
         <h2 className="font-semibold text-base">On-Chain Messages</h2>
         <div className="flex items-center gap-2">
-          <span className="text-xs" style={{ color: "var(--muted)" }}>plaintext · live</span>
+          <span className="text-xs" style={{ color: "var(--muted)" }}>plaintext · mainnet</span>
           <a href="/messages" className="text-xs hover:text-white transition-colors" style={{ color: "var(--muted)" }}>View all →</a>
         </div>
       </div>

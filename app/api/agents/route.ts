@@ -37,7 +37,7 @@ export async function GET() {
       const txList = txData.transactions ?? [];
       const txCount = txList.length;
 
-      const SIGNUM_EPOCH = new Date("2014-01-11T02:00:00Z").getTime() / 1000;
+      const SIGNUM_EPOCH = new Date("2014-08-11T02:00:00Z").getTime() / 1000;
       const lastSeenTs = txList[0]?.timestamp;
       const lastSeen = lastSeenTs
         ? new Date((SIGNUM_EPOCH + lastSeenTs) * 1000).toISOString()

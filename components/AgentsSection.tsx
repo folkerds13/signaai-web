@@ -1,5 +1,5 @@
 const NODE = "https://europe.signum.network";
-const SIGNUM_EPOCH = new Date("2014-01-11T02:00:00Z").getTime() / 1000;
+const SIGNUM_EPOCH = new Date("2014-08-11T02:00:00Z").getTime() / 1000;
 const REGISTRY_ACCOUNTS = [
   "S-PS4K-2KE2-8LEV-HD2YE",
   "S-44S7-32XB-5DM5-5AL3K",

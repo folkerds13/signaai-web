@@ -2,8 +2,16 @@ import { NextResponse } from "next/server";
 
 const NODE = "https://europe.signum.network";
 const ACCOUNTS = ["S-PS4K-2KE2-8LEV-HD2YE", "S-44S7-32XB-5DM5-5AL3K"];
-const SIGNUM_EPOCH = new Date("2014-01-11T02:00:00Z").getTime() / 1000;
-const PROTOCOL_PREFIXES = ["ESCROW_", "SIGNAAI_AGENT:", "SIGNAAI_STAMP:", "ARBIT_"];
+const SIGNUM_EPOCH = new Date("2014-08-11T02:00:00Z").getTime() / 1000;
+
+// Current protocol prefixes — filter these into the agent log, not plain messages
+const PROTOCOL_PREFIXES = [
+  "ESCROW:",
+  "SIGPROOF:",
+  "TASK_COMPLETE:",
+  "ARBIT_",
+  "AGENT:v1:",
+];
 
 async function signumGet(params: Record<string, string>) {
   const qs = new URLSearchParams(params).toString();
@@ -13,6 +21,14 @@ async function signumGet(params: Record<string, string>) {
 
 function signumTs(ts: number) {
   return new Date((SIGNUM_EPOCH + ts) * 1000).toISOString();
+}
+
+function redactMessage(msg: string): string {
+  // Strip |TG: routing suffix (contains Telegram bot token + chat ID)
+  let out = msg.replace(/\|TG:[^\s]*/g, "").trim();
+  // Strip any bare Telegram bot tokens (format: digits:AAxxxxxxx)
+  out = out.replace(/\d{8,10}:AA[A-Za-z0-9_\-]{30,}/g, "[redacted]");
+  return out;
 }
 
 export async function GET(request: Request) {
@@ -41,7 +57,7 @@ export async function GET(request: Request) {
           id: tx.transaction,
           sender: tx.senderRS ?? "",
           recipient: tx.recipientRS ?? "",
-          message: msg,
+          message: redactMessage(msg),
           timestamp: signumTs(tx.timestamp),
         });
       }
