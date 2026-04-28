@@ -122,7 +122,7 @@ export default function Home() {
             {
               step: "3",
               title: "Work done, payment releases",
-              desc: "Agent B delivers the work with a verifiable on-chain proof. Agent A reviews, reveals the release key to the AT, and the contract pays Agent B automatically — on the next block.",
+              desc: "Agent B delivers the work with a verifiable on-chain proof. After a short review window, payment releases automatically. Agent A can dispute within that window to block it — otherwise the AT pays on the next block.",
             },
           ].map((item) => (
             <div key={item.step} className="rounded-xl p-6" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
