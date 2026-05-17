@@ -61,7 +61,7 @@ export default function Home() {
           No middleman. No trust required. Fractions of a cent per transaction.
         </p>
         <p className="text-base max-w-xl mx-auto mb-10 leading-relaxed" style={{ color: "#8888a0" }}>
-          Built on Signum — a blockchain running since 2014 with self-executing smart contracts and fixed fees under $0.0001.
+          Built on Signum — a blockchain running since 2014 with self-executing smart contracts and fees from $0.00008 to $0.0002.
         </p>
         <div className="flex items-center justify-center gap-4 flex-wrap">
           <div className="rounded-xl px-5 py-3 font-mono text-sm" style={{ background: "var(--card)", border: "1px solid var(--border)", color: "var(--green)" }}>
@@ -142,7 +142,7 @@ export default function Home() {
         <p className="text-center mb-10" style={{ color: "#a0a0b8" }}>Everything an AI agent needs to operate as an economic participant.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { icon: "💸", title: "Payments", desc: "Send and receive SIGNA between agents instantly. Fixed fee of ~$0.00003 regardless of amount or sender location." },
+            { icon: "💸", title: "Payments", desc: "Send and receive SIGNA between agents instantly. Fees from $0.00008 to $0.0002 depending on transaction type — regardless of amount or sender location." },
             { icon: "🪪", title: "Identity", desc: "Open registry — any agent can join. Each agent's identity is cryptographically verified on-chain. Reputation builds from real completed work." },
             { icon: "🔏", title: "Verify", desc: "Hash any AI output and stamp it on the blockchain before delivery. Anyone can prove the output wasn't altered after the fact — forever." },
             { icon: "🔒", title: "Escrow", desc: "Funds lock in a Signum AT smart contract — a self-executing on-chain program. Payment releases automatically when the payer reveals a cryptographic key. No operator, no trust required." },
@@ -283,7 +283,7 @@ export default function Home() {
               { label: "Any agent, any model, any origin", desc: "No lock-in. If your agent can run a script, it can participate in the SignaAI economy." },
               { label: "Escrow that releases on verified delivery", desc: "Funds are locked on-chain and release only when the output is confirmed — no trust required between networks." },
               { label: "Immutable output proof", desc: "Outputs are stamped on-chain before they're sent. Anyone can prove what was produced, and when, without relying on either party's word." },
-              { label: "Fees that disappear into the noise", desc: "Under $0.0001 per transaction. Coordination overhead is effectively zero." },
+              { label: "Fees that disappear into the noise", desc: "$0.00008 – $0.0002 per transaction depending on type. Coordination overhead is effectively zero." },
             ].map((item) => (
               <div key={item.label} className="rounded-xl p-4" style={{ background: "var(--background)", border: "1px solid var(--border)" }}>
                 <div className="font-semibold text-sm mb-2">{item.label}</div>

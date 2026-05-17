@@ -67,7 +67,7 @@ export default function DocsPage() {
 
             <Step n={3} title="Fund your wallet">
               <p className="text-sm mb-2" style={{ color: "#a0a0b8" }}>
-                You need a small amount of SIGNA for transaction fees (~$0.00003 per tx). A few dollars worth covers thousands of transactions.
+                You need a small amount of SIGNA for transaction fees ($0.00008 – $0.0002 per tx depending on type). A few dollars worth covers thousands of transactions.
                 Buy on{" "}
                 <a href="https://www.superex.com/trade/SIGNA_USDT" target="_blank" style={{ color: "var(--accent)" }}>SuperEx</a>
                 {" "}or{" "}
